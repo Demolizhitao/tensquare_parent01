@@ -31,4 +31,6 @@ public class PageResult<T>{
     public void setRows(List<T> rows) {
         this.rows = rows;
     }
+
+
 }
