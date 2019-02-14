@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import util.IdWorker;
@@ -40,6 +41,9 @@ public class ArticleService {
 	
 	@Autowired
 	private IdWorker idWorker;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 
 	/**
 	 * 文章审核
@@ -97,7 +101,13 @@ public class ArticleService {
 	 * @return
 	 */
 	public Article findById(String id) {
-		return articleDao.findById(id).get();
+		//TODO 用缓存保存查询结果  减少服务器与数据库交互
+		Article article = (Article) redisTemplate.opsForValue().get("article_"+id);
+		if(article == null){
+			article = articleDao.findById(id).get();
+			redisTemplate.opsForValue().set("article_"+id,article);
+		}
+		return article;
 	}
 
 	/**
@@ -114,6 +124,8 @@ public class ArticleService {
 	 * @param article
 	 */
 	public void update(Article article) {
+
+		redisTemplate.delete("article"+article.getId());
 		articleDao.save(article);
 	}
 
@@ -122,6 +134,8 @@ public class ArticleService {
 	 * @param id
 	 */
 	public void deleteById(String id) {
+
+		redisTemplate.delete("article"+id);
 		articleDao.deleteById(id);
 	}
 
