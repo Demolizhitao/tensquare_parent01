@@ -40,6 +40,15 @@ public class EnterpriseService {
 	private IdWorker idWorker;
 
 	/**
+	 * 查询热门企业
+	 * @param ishot
+	 * @return
+	 */
+	public List<Enterprise> hotlist(){
+		return enterpriseDao.findByIshot("1");
+	}
+
+	/**
 	 * 查询全部列表
 	 * @return
 	 */

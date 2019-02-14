@@ -2,6 +2,7 @@ package com.tensquare.recruit.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.tensquare.recruit.service.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +30,27 @@ public class RecruitController {
 
 	@Autowired
 	private RecruitService recruitService;
-	
-	
+
+	/**
+	 * 查询状态为2并以创建日期降序排序，查询前4条记录
+	 * @return
+	 */
+	@RequestMapping(value ="/search/recommend",method= RequestMethod.GET)
+	public Result recommend(){
+		List<Recruit> list = recruitService.findTop4ByStateOrderByCreatetimeDesc("2");
+		return new Result(true,StatusCode.OK,"查询成功",list);
+	}
+
+	/**
+	 * 查询状态不为0并以创建日期降序排序，查询前12条记录
+	 * @return
+	 */
+	@RequestMapping(value ="/search/newlist",method= RequestMethod.GET)
+	public Result newlist(){
+		List<Recruit> list = recruitService.findTop12ByStateNotOrderByCreatetimeDesc();
+		return new Result(true,StatusCode.OK,"查询成功",list);
+	}
+
 	/**
 	 * 查询全部数据
 	 * @return

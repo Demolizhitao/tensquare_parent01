@@ -30,7 +30,17 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	
+	@RequestMapping(value ="/examine/{id}",method = RequestMethod.PUT)
+	public Result examine(@PathVariable String id){
+		articleService.examine(id);
+		return new Result(true,StatusCode.OK,"审核成功");
+	}
+
+	@RequestMapping(value="/thumbup/{id}",method = RequestMethod.PUT)
+	public Result addthumbup(@PathVariable String id){
+		articleService.examine(id);
+		return new Result(true,StatusCode.OK,"点赞成功");
+	}
 	/**
 	 * 查询全部数据
 	 * @return

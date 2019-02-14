@@ -40,6 +40,22 @@ public class RecruitService {
 	private IdWorker idWorker;
 
 	/**
+	 * 需求 查询状态为2并以创建日期降序排序，查询前4条记录
+	 * @param state
+	 * @return
+	 */
+	public List<Recruit> findTop4ByStateOrderByCreatetimeDesc(String state){
+		return recruitDao.findTop4ByStateOrderByCreatetimeDesc(state);
+	}
+
+	/**
+	 * 查询状态不为0并以创建日期降序排序，查询前12条记录
+	 * @return
+	 */
+	public List<Recruit> findTop12ByStateNotOrderByCreatetimeDesc(){
+		return  recruitDao.findTop12ByStateNotOrderByCreatetimeDesc("0");
+	}
+	/**
 	 * 查询全部列表
 	 * @return
 	 */

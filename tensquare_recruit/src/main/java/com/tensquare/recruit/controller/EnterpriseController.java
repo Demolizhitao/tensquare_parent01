@@ -29,8 +29,12 @@ public class EnterpriseController {
 
 	@Autowired
 	private EnterpriseService enterpriseService;
-	
-	
+
+	@RequestMapping(value = "/search/hotlist",method = RequestMethod.GET)
+	public Result hotlist(){
+		return new Result(true,StatusCode.OK,"查询成功",enterpriseService.hotlist());
+	}
+
 	/**
 	 * 查询全部数据
 	 * @return

@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +41,23 @@ public class ArticleService {
 	@Autowired
 	private IdWorker idWorker;
 
+	/**
+	 * 文章审核
+	 * @param id
+	 */
+	@Transactional
+	public void examine(String id){
+		articleDao.examine(id);
+	}
+
+	/**
+	 * 增加点赞
+	 * @param id
+	 */
+	@Transactional
+	public void addthumbup(String id){
+		articleDao.addthumbup(id);
+	}
 	/**
 	 * 查询全部列表
 	 * @return
