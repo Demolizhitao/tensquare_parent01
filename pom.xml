@@ -15,6 +15,7 @@
         <module>tensquare_gathering</module>
         <module>tensquare_friend</module>
         <module>tensquare_user</module>
+        <module>tensquare_spit</module>
     </modules>
     <packaging>pom</packaging>
 
